@@ -1,0 +1,45 @@
+# ==========================================================
+# Robots.txt for UdioSunova AI (https://udiosunova.com/)
+# Optimized for Google Search and AI Search Engines (Gemini, ChatGPT, Claude, Perplexity)
+# ==========================================================
+
+# Standard Search Engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# AI Search & LLM Crawlers (Explicitly Allowed for indexing in AI systems)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+# General Fallback
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Sitemap Link
+Sitemap: https://udiosunova.com/sitemap.xml
+

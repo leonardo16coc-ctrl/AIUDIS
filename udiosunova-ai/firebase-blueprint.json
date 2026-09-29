@@ -1,0 +1,114 @@
+{
+  "collections": {
+    "users": {
+      "path": "users/{userId}",
+      "description": "Stores user profiles and subscription plans",
+      "fields": {
+        "id": { "type": "string", "description": "The unique user ID matching auth.uid" },
+        "email": { "type": "string", "description": "The user's email address" },
+        "name": { "type": "string", "description": "The user's display name" },
+        "image": { "type": "string", "description": "URL to the user's profile image" },
+        "plan": { "type": "string", "description": "Subscription plan: FREE, PLUS, PRO" },
+        "createdAt": { "type": "string", "description": "ISO timestamp when the user registered" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp when the user profile was last updated" }
+      },
+      "rules": {
+        "read": "request.auth != null && request.auth.uid == userId",
+        "create": "request.auth != null && request.auth.uid == userId",
+        "update": "request.auth != null && request.auth.uid == userId",
+        "delete": "false"
+      },
+      "subcollections": {
+        "audioAssets": {
+          "path": "audioAssets/{assetId}",
+          "description": "Stores high-fidelity music files and conversion statuses",
+          "fields": {
+            "id": { "type": "string" },
+            "userId": { "type": "string" },
+            "title": { "type": "string" },
+            "artist": { "type": "string" },
+            "coverUrl": { "type": "string" },
+            "sourceUrl": { "type": "string" },
+            "sourcePlatform": { "type": "string" },
+            "duration": { "type": "number" },
+            "originalFileUrl": { "type": "string" },
+            "mp3FileUrl": { "type": "string" },
+            "wavFileUrl": { "type": "string" },
+            "flacFileUrl": { "type": "string" },
+            "waveformJsonUrl": { "type": "string" },
+            "status": { "type": "string" },
+            "visibility": { "type": "string" },
+            "errorMessage": { "type": "string || null" },
+            "createdAt": { "type": "string" },
+            "updatedAt": { "type": "string" },
+            "expiresAt": { "type": "string || null" }
+          },
+          "rules": {
+            "read": "request.auth != null && request.auth.uid == userId",
+            "create": "request.auth != null && request.auth.uid == userId",
+            "update": "request.auth != null && request.auth.uid == userId",
+            "delete": "request.auth != null && request.auth.uid == userId"
+          }
+        },
+        "audioJobs": {
+          "path": "audioJobs/{jobId}",
+          "description": "Processing jobs for transcoding, mastering, or importing tracks",
+          "fields": {
+            "id": { "type": "string" },
+            "audioAssetId": { "type": "string" },
+            "type": { "type": "string" },
+            "status": { "type": "string" },
+            "progress": { "type": "number" },
+            "message": { "type": "string" },
+            "errorMessage": { "type": "string || null" },
+            "createdAt": { "type": "string" },
+            "updatedAt": { "type": "string" }
+          },
+          "rules": {
+            "read": "request.auth != null && request.auth.uid == userId",
+            "create": "request.auth != null && request.auth.uid == userId",
+            "update": "request.auth != null && request.auth.uid == userId",
+            "delete": "request.auth != null && request.auth.uid == userId"
+          }
+        },
+        "downloadLogs": {
+          "path": "downloadLogs/{logId}",
+          "description": "Download logs for rate limiting and auditing",
+          "fields": {
+            "id": { "type": "string" },
+            "userId": { "type": "string" },
+            "audioAssetId": { "type": "string" },
+            "format": { "type": "string" },
+            "ipAddress": { "type": "string" },
+            "userAgent": { "type": "string" },
+            "createdAt": { "type": "string" }
+          },
+          "rules": {
+            "read": "request.auth != null && request.auth.uid == userId",
+            "create": "request.auth != null && request.auth.uid == userId",
+            "update": "false",
+            "delete": "false"
+          }
+        },
+        "abuseLogs": {
+          "path": "abuseLogs/{logId}",
+          "description": "Abuse events triggered by rate-limit violations",
+          "fields": {
+            "id": { "type": "string" },
+            "userId": { "type": "string" },
+            "ipAddress": { "type": "string" },
+            "reason": { "type": "string" },
+            "sourceUrl": { "type": "string" },
+            "createdAt": { "type": "string" }
+          },
+          "rules": {
+            "read": "request.auth != null && request.auth.uid == userId",
+            "create": "request.auth != null && request.auth.uid == userId",
+            "update": "false",
+            "delete": "false"
+          }
+        }
+      }
+    }
+  }
+}

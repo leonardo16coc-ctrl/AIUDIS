@@ -1,0 +1,55 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions for validating primitive fields
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128;
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.matches('^[^@]+@[^@]+\\.[^@]+$');
+    }
+
+    function isValidName(name) {
+      return name is string && name.size() >= 1 && name.size() <= 100;
+    }
+
+    function isValidPlan(plan) {
+      return plan == 'FREE' || plan == 'PLUS' || plan == 'PRO';
+    }
+
+    function isValidAudioStatus(status) {
+      return status == 'PENDING' || status == 'PROCESSING' || status == 'COMPLETE' || status == 'FAILED';
+    }
+
+    function isValidVisibility(v) {
+      return v == 'PUBLIC' || v == 'PRIVATE';
+    }
+
+    // Rules for User document
+    match /users/{userId} {
+      allow read, create, update: if request.auth != null && request.auth.uid == userId;
+      allow delete: if false;
+
+      // Rules for User's Subcollections
+      match /audioAssets/{assetId} {
+        allow read, create, update, delete: if request.auth != null && request.auth.uid == userId;
+      }
+
+      match /audioJobs/{jobId} {
+        allow read, create, update, delete: if request.auth != null && request.auth.uid == userId;
+      }
+
+      match /downloadLogs/{logId} {
+        allow read, create: if request.auth != null && request.auth.uid == userId;
+        allow update, delete: if false;
+      }
+
+      match /abuseLogs/{logId} {
+        allow read, create: if request.auth != null && request.auth.uid == userId;
+        allow update, delete: if false;
+      }
+    }
+  }
+}

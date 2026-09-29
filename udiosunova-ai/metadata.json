@@ -1,0 +1,6 @@
+{
+  "name": "UdioSunova AI",
+  "description": "UdioSunova AI is an advanced AI Audio Studio to import public songs, preserve metadata, convert audio formats, and organize your music library.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
